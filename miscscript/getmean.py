@@ -11,7 +11,7 @@ from sklearn.pipeline import Pipeline
 import pickle
 
 # 加载训练数据
-train_data = pd.read_csv('train_data/train.csv')
+train_data = pd.read_csv('../train_data/train.csv')
 
 # 去掉 'Id' 列
 train_data = train_data.drop(columns=['Id'])

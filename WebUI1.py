@@ -134,7 +134,7 @@ def predict_house_price(MSSubClass, MSZoning, LotArea, Utilities, OverallQual, Y
         "SaleCondition": ['Normal']  
     }   
     test_data = pd.DataFrame(data)
-    with open('preprocessor.pkl', 'rb') as f:
+    with open('pickle/preprocessor.pkl', 'rb') as f:
         preprocessor = pickle.load(f)
 
     # 只转换测试数据
@@ -149,14 +149,14 @@ def predict_house_price(MSSubClass, MSZoning, LotArea, Utilities, OverallQual, Y
     # 加载模型
     input_dim = X_test.shape[1]
     model = HousePricePredictor(input_dim)
-    model.load_state_dict(torch.load('best_model.pth'))
+    model.load_state_dict(torch.load('models/best_model.pth'))
     model.eval()
     # 进行预测
     with torch.no_grad():
         predictions = model(X_test_tensor).numpy()
 
     # 加载目标变量的 StandardScaler
-    with open('scaler_y.pkl', 'rb') as f:
+    with open('pickle/scaler_y.pkl', 'rb') as f:
         scaler_y = pickle.load(f)
 
     # 反标准化预测值

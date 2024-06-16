@@ -31,7 +31,7 @@ class HousePricePredictor(nn.Module):
         return x
 
 # 读取数据
-train_data = pd.read_csv('train_data/train.csv')
+train_data = pd.read_csv('../train_data/train.csv')
 
 # 去掉 'Id' 列
 train_data = train_data.drop(columns=['Id'])
@@ -64,7 +64,7 @@ preprocessor = ColumnTransformer(
 X_train = preprocessor.fit_transform(X_train)
 
 # 保存ColumnTransformer
-with open('preprocessor.pkl', 'wb') as f:
+with open('../pickle/preprocessor.pkl', 'wb') as f:
     pickle.dump(preprocessor, f)
 
 # 标准化目标变量
@@ -72,7 +72,7 @@ scaler_y = StandardScaler()
 y_train = scaler_y.fit_transform(y_train.values.reshape(-1, 1))
 
 # 保存StandardScaler
-with open('scaler_y.pkl', 'wb') as f:
+with open('../pickle/scaler_y.pkl', 'wb') as f:
     pickle.dump(scaler_y, f)
 
 # 拆分训练集和验证集
@@ -134,7 +134,7 @@ for epoch in range(num_epochs):
     if val_loss < best_val_loss:
         best_val_loss = val_loss
         trigger_times = 0
-        torch.save(model.state_dict(), 'best_model.pth')
+        torch.save(model.state_dict(), '../models/best_model.pth')
     else:
         trigger_times += 1
         if trigger_times >= patience:
